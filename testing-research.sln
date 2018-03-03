@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestLibrary", "UnitTestLibrary\UnitTestLibrary.csproj", "{F9280663-64AB-4FC0-80DE-27C5CCDF4DAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestLibrary", "UnitTestLibrary\UnitTestLibrary.csproj", "{F9280663-64AB-4FC0-80DE-27C5CCDF4DAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRunner", "TestRunner\TestRunner.csproj", "{D9FF2E74-36AD-42BE-839C-8A268499C956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestRunner", "TestRunner\TestRunner.csproj", "{D9FF2E74-36AD-42BE-839C-8A268499C956}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleUnitTests", "SampleUnitTests\SampleUnitTests.csproj", "{9C8D58D6-CE3B-49D8-9121-68C08BE6CC77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleUnitTests", "SampleUnitTests\SampleUnitTests.csproj", "{9C8D58D6-CE3B-49D8-9121-68C08BE6CC77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F0DC99EC-2CB8-495E-B139-988CB0B48F2B}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
