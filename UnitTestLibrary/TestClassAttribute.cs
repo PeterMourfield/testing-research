@@ -3,7 +3,7 @@
 namespace UnitTestLibrary
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class TestClass : Attribute
+    public class TestClassAttribute : Attribute
     {
     }
 }
