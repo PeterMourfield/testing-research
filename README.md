@@ -2,10 +2,15 @@
 Simple Implementations of common software testing tools
 
 **ContainerLibrary** is an IoC container
+
 **SampleUnitTests** help test the TestRunner
+
 **TestRunner** runs the Unit Tests
+
 **UnitTestLibrary** defines the components for unit testing
+
 **RoslynControlFlowSample** uses the Roslyn API to perform some basic Control Flow Analysis
+
 **RoslynDataFlowSample** uses the Roslyn API to perform some basic Data Flow Analysis
 
 ## TODO:
