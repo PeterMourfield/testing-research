@@ -15,3 +15,8 @@ Simple Implementations of common software testing tools
 
 ## TODO:
 Write a code coverage tool that instruments the test to provide basic code coverage metrics
+
+## TestRunner
+To execute the TestRunner from the command line:
+1. navigate to testing-research\TestRunner\bin\Debug\netcoreapp2.0
+2. type dotnet TestRunner.dll ../../../../SampleUnitTests/bin/Debug/netcoreapp2.0/SampleUnitTests.dll
