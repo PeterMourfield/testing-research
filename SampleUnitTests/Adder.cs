@@ -1,6 +1,6 @@
 ﻿namespace SampleUnitTests
 {
-    public class Adder
+    public class Adder : IAdder
     {
         public int Add(int a, int b)
         {

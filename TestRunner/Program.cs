@@ -35,6 +35,7 @@ namespace TestRunner
 
             if (testAssembly != null)
             {
+                Directory.SetCurrentDirectory(Path.GetDirectoryName(path));
                 foreach (Type type in testAssembly.GetTypes())
                 {
                     if (type.GetCustomAttributes(typeof(TestClassAttribute), true).Length > 0)
@@ -43,7 +44,7 @@ namespace TestRunner
                         Console.WriteLine(string.Format("Processing class {0}", type.Name));
                         foreach(MethodInfo method in type.GetMethods())
                         {
-                            if(method.GetCustomAttributes(typeof(TestMethodAttribute), false).Length > 0)
+                            if(method.GetCustomAttribute(typeof(TestMethodAttribute)) != null)
                             {
                                 try
                                 {
@@ -52,18 +53,26 @@ namespace TestRunner
                                 }
                                 catch(Exception ex)
                                 {
-                                    var sb = new StringBuilder();
-                                    sb.AppendFormat("\tTest method {0} failed", method.Name);
-                                    sb.AppendLine();
-                                    if (ex.InnerException != null)
+                                    var expectedExceptionAttribute = method.GetCustomAttribute(typeof(ExpectedExceptionAttribute));
+                                    if (expectedExceptionAttribute != null && ex.InnerException.GetType() == ((ExpectedExceptionAttribute)expectedExceptionAttribute).ExpectedType)
                                     {
-                                        sb.AppendFormat("\t\t{0}", ex.InnerException.Message);
+                                        Console.WriteLine(string.Format("\tTest method {0} succeeded", method.Name));
                                     }
                                     else
                                     {
-                                        sb.AppendFormat("\t\t{0}", ex.Message);
+                                        var sb = new StringBuilder();
+                                        sb.AppendFormat("\tTest method {0} failed", method.Name);
+                                        sb.AppendLine();
+                                        if (ex.InnerException != null)
+                                        {
+                                            sb.AppendFormat("\t\t{0}", ex.InnerException.Message);
+                                        }
+                                        else
+                                        {
+                                            sb.AppendFormat("\t\t{0}", ex.Message);
+                                        }
+                                        Console.WriteLine(sb.ToString());
                                     }
-                                    Console.WriteLine(sb.ToString());
                                 }
                             }
                         }

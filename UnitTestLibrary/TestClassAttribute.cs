@@ -2,7 +2,7 @@
 
 namespace UnitTestLibrary
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class TestClassAttribute : Attribute
     {
     }
