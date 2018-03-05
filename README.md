@@ -14,7 +14,8 @@ Simple Implementations of common software testing tools
 **RoslynDataFlowSample** uses the Roslyn API to perform some basic Data Flow Analysis
 
 ## TODO:
-Write a code coverage tool that instruments the test to provide basic code coverage metrics
+1. Expanded the TestOracles in the Assert class
+2. Write a code coverage tool that instruments the test to provide basic code coverage metrics
 
 ## TestRunner
 To execute the TestRunner from the command line:
