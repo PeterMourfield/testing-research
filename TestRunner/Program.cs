@@ -30,12 +30,11 @@ namespace TestRunner
             }
             else
             {
-                testAssembly = Assembly.LoadFile(path);
+                testAssembly = Assembly.LoadFrom(path);
             }
 
             if (testAssembly != null)
             {
-                Directory.SetCurrentDirectory(Path.GetDirectoryName(path));
                 foreach (Type type in testAssembly.GetTypes())
                 {
                     if (type.GetCustomAttributes(typeof(TestClassAttribute), true).Length > 0)
@@ -49,19 +48,19 @@ namespace TestRunner
                                 try
                                 {
                                     method.Invoke(classToTest, null);
-                                    Console.WriteLine(string.Format("\tTest method {0} succeeded", method.Name));
+                                    Console.WriteLine(string.Format("\tSUCCEEDED: Test method {0}", method.Name));
                                 }
                                 catch(Exception ex)
                                 {
                                     var expectedExceptionAttribute = method.GetCustomAttribute(typeof(ExpectedExceptionAttribute));
                                     if (expectedExceptionAttribute != null && ex.InnerException.GetType() == ((ExpectedExceptionAttribute)expectedExceptionAttribute).ExpectedType)
                                     {
-                                        Console.WriteLine(string.Format("\tTest method {0} succeeded", method.Name));
+                                        Console.WriteLine(string.Format("\tSUCCEEDED: Test method {0}", method.Name));
                                     }
                                     else
                                     {
                                         var sb = new StringBuilder();
-                                        sb.AppendFormat("\tTest method {0} failed", method.Name);
+                                        sb.AppendFormat("\tFAILED: Test method {0}", method.Name);
                                         sb.AppendLine();
                                         if (ex.InnerException != null)
                                         {
@@ -79,8 +78,6 @@ namespace TestRunner
                     }
                 }
             }
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey();
         }
     }
 }
