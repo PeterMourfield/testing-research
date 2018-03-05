@@ -4,7 +4,6 @@ using UnitTestLibrary;
 
 namespace SampleUnitTests
 {
-    [TestClass]
     public class AdderTests
     {
         private Container container;
@@ -51,8 +50,21 @@ namespace SampleUnitTests
             Assert.ShouldEqual(3, result);
         }
 
-        [TestMethod, ExpectedException(typeof(ApplicationException))]
+        [TestMethod(ExpectedExceptionType = typeof(ApplicationException))]
         public void One_Plus_One_Should_Not_Error()
+        {
+            // Arrange
+            int a = 1;
+            int b = 1;
+            IAdder adder = Container.GetInstance<IAdder>();
+            // Act
+            int result = adder.Add(a, b);
+            // Assert
+            Assert.ShouldEqual(3, result);
+        }
+
+        [TestMethod(Ignore = true)]
+        public void One_Plus_One_Should_Be_Ignored()
         {
             // Arrange
             int a = 1;

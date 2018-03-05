@@ -38,41 +38,50 @@ namespace TestRunner
                 Console.WriteLine("Starting execution");
                 foreach (Type type in testAssembly.GetTypes())
                 {
-                    if (type.GetCustomAttributes(typeof(TestClassAttribute), true).Length > 0)
+                    var methods = type.GetMethods().Where(m => m.GetCustomAttributes(typeof(TestMethodAttribute), false).Length > 0).ToArray();
+                    if (methods.Length == 0)
                     {
-                        var classToTest = Activator.CreateInstance(type);
-                        foreach(MethodInfo method in type.GetMethods())
+                        continue;
+                    }
+
+                    var classToTest = Activator.CreateInstance(type);
+                    foreach (var method in methods)
+                    {
+                        TestMethodAttribute testMethodAttribute = method.GetCustomAttribute(typeof(TestMethodAttribute)) as TestMethodAttribute;
+                        if (testMethodAttribute != null)
                         {
-                            var testMethodAttribute = method.GetCustomAttribute(typeof(TestMethodAttribute));
-                            if (testMethodAttribute != null)
+                            try
                             {
-                                try
+                                if (testMethodAttribute.Ignore)
+                                {
+                                    Console.WriteLine(string.Format("IGNORED\t\t{0}.{1}", type.FullName, method.Name));
+                                }
+                                else
                                 {
                                     method.Invoke(classToTest, null);
                                     Console.WriteLine(string.Format("SUCCEEDED\t{0}.{1}", type.FullName, method.Name));
                                 }
-                                catch(Exception ex)
+                            }
+                            catch (Exception ex)
+                            {
+                                if (testMethodAttribute.ExpectedExceptionType != null && ex.InnerException.GetType() == testMethodAttribute.ExpectedExceptionType)
                                 {
-                                    var expectedExceptionAttribute = method.GetCustomAttribute(typeof(ExpectedExceptionAttribute));
-                                    if (expectedExceptionAttribute != null && ex.InnerException.GetType() == ((ExpectedExceptionAttribute)expectedExceptionAttribute).ExpectedType)
+                                    Console.WriteLine(string.Format("SUCCEEDED\t{0}.{1}", type.FullName, method.Name));
+                                }
+                                else
+                                {
+                                    var sb = new StringBuilder();
+                                    sb.AppendFormat("FAILED\t\t{0}.{1}", type.FullName, method.Name);
+                                    sb.AppendLine();
+                                    if (ex.InnerException != null)
                                     {
-                                        Console.WriteLine(string.Format("SUCCEEDED\t{0}.{1}", type.FullName, method.Name));
+                                        sb.AppendFormat("\t\tEXCEPTION\t{0}({1})", ex.InnerException.GetType().FullName, ex.InnerException.Message);
                                     }
                                     else
                                     {
-                                        var sb = new StringBuilder();
-                                        sb.AppendFormat("FAILED\t\t{0}.{1}", type.FullName, method.Name);
-                                        sb.AppendLine();
-                                        if (ex.InnerException != null)
-                                        {
-                                            sb.AppendFormat("\t\t\t***{0}", ex.InnerException.Message);
-                                        }
-                                        else
-                                        {
-                                            sb.AppendFormat("\t\t\t***{0}", ex.Message);
-                                        }
-                                        Console.WriteLine(sb.ToString());
+                                        sb.AppendFormat("\t\tEXCEPTION\t{0}({1})", ex.GetType().FullName, ex.Message);
                                     }
+                                    Console.WriteLine(sb.ToString());
                                 }
                             }
                         }
