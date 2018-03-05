@@ -18,10 +18,6 @@ namespace SampleUnitTests
                 }
                 return container;
             }
-            set
-            {
-
-            }
         }
 
         [TestMethod]
