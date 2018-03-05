@@ -25,8 +25,7 @@ dotnet build testing-research.sln
 ```
 
 ## TestRunner
-To execute the TestRunner from the command line:
-From the directory that the sln is in type: 
+To execute the TestRunner from the terminal, in the directory that the sln is in type: 
 
 ```
 dotnet .\TestRunner\bin\Debug\netcoreapp2.0\TestRunner.dll .\SampleUnitTests\bin\Debug\netcoreapp2.0\SampleUnitTests.dll
